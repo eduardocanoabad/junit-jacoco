@@ -13,19 +13,25 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building project...'
-                sh 'cd java-junit-code-coverage-jacoco-gradle' 
-                sh './gradlew install'
+                sh 'chmod +x java-junit-code-coverage-jacoco-gradle/gradlew'
+                sh 'cd java-junit-code-coverage-jacoco-gradle && ls && ./gradlew build' 
             }
         }
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh './gradlew test'
+                sh 'cd java-junit-code-coverage-jacoco-gradle && ./gradlew test'
+                jacoco runAlways: true
             }
         }
-        stage('Deploy') {
+        stage('Sonar') {
+            environment {
+                scannerHome = tool 'SonarQubeScanner'
+            }
             steps {
-                echo 'Deploy project...'
+                withSonarQubeEnv('SonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
             }
         }
         }

@@ -8,7 +8,7 @@ jacoco {
     reportsDir = file("$buildDir/reports/jacoco") //default directory where jacoco generates test reports
 }
 
-//if you want to use custom report format then uncomment below task 
+//if you want to use custom report format then uncomment below task
 //use command "gradle build jacocoTestReport" to generate reports using below task
 /*jacocoTestReport {
 	dependsOn test // tests are required to run before generating the report
@@ -35,6 +35,6 @@ dependencies {
 	testImplementation('junit:junit:4.12') {
         exclude group: 'org.hamcrest'
     }
-    
+
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
 }
